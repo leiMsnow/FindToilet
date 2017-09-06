@@ -8,63 +8,59 @@ import {
 import Utils from '../../utils/utils';
 
 export default class Recommend extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>
-                    热门推荐
-                </Text>
-                <View style={styles.imageView}>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                </View>
 
-                <View style={styles.imageView}>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                    <RecommendItem
-                        sourceUri='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'
-                        title='标题'/>
-                </View>
-
-            </View>
-        );
-    }
-}
-
-class RecommendItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sourceUri: this.props.sourceUri,
-            title: this.props.title,
-        }
+            name: this.props.name,
+            data: this.props.data
+        };
     }
 
     render() {
+        let data = this.state.data;
+        let view1 = [];
+        let view2 = [];
+        for (let i in data) {
+            if (i < 4) {
+                view1.push(
+                    <View style={styles.imageItem} key={i}>
+                        <Image style={styles.image}
+                               resetModel="cover"
+                               source={{uri: data[i].img}}/>
+                        <Text style={styles.contentText} numberOfLines={2}>{data[i].title}</Text>
+                    </View>
+                );
+            } else {
+                view2.push(
+                    <View style={styles.imageItem} key={i}>
+                        <Image style={styles.image}
+                               resetModel="cover"
+                               source={{uri: data[i].img}}/>
+                        <Text style={styles.contentText} numberOfLines={2}>{data[i].title}</Text>
+                    </View>
+                );
+            }
+        }
         return (
-            <View style={styles.imageItem}>
-                <Image style={styles.image}
-                       resetModel="cover"
-                       source={{uri: this.state.sourceUri}}/>
-                <Text style={styles.contentText} numberOfLines={2}>{this.state.title}</Text>
+            <View style={styles.container}>
+                <Text style={styles.title}>
+                    {
+                        this.state.name
+                    }
+                </Text>
+                <View style={styles.imageView}>
+                    {
+                        view1
+                    }
+                </View>
+
+                <View style={styles.imageView}>
+                    {
+                        view2
+                    }
+                </View>
+
             </View>
         );
     }

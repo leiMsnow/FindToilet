@@ -3,51 +3,69 @@ import {
     StyleSheet,
     Text,
     View,
+    TouchableOpacity,
 } from 'react-native';
-import Utils from '../../utils/utils'
+
+import List from './list';
+import Utils from '../../utils/utils';
 
 export default class Category extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>分类</Text>
-                <CategoryItem
-                    categoryNameLeft='金融'
-                    categoryNameRight='管理'/>
-                <CategoryItem
-                    categoryNameLeft='互联网'
-                    categoryNameRight='散文'/>
-            </View>
-        );
-    }
-}
 
-class CategoryItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categoryNameLeft: this.props.categoryNameLeft,
-            categoryNameRight: this.props.categoryNameRight
+            data: this.props.data,
+            navigator: this.props.navigator,
         };
     }
 
     render() {
-        return (
-            <View style={styles.textView}>
-                <View style={styles.textItem}>
-                    <View style={styles.textSubItem}>
-                        <Text style={styles.text}>{this.state.categoryNameLeft}</Text>
-                    </View>
+        let data = this.state.data;
+        let views1 = [];
+        let views2 = [];
+        for (let i in data) {
+            let item = (
+                <View style={styles.textItem} key={i}>
+                    <TouchableOpacity style={styles.textSubItem}
+                                      onPress={this._openList.bind(this, data[i].text, data[i].type)}>
+                        <Text style={styles.text}>{data[i].text}</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.textItem}>
-                    <View style={styles.textSubItem}>
-                        <Text style={styles.text}>{this.state.categoryNameRight}</Text>
-                    </View>
+            );
+            if (i < 2) {
+                views1.push(item);
+            } else {
+                views2.push(item);
+            }
+        }
+        return (
+            <View style={styles.container}>
+                <Text style={styles.title}>分类</Text>
+                <View style={styles.textView}>
+                    {
+                        views1
+                    }
+                </View>
+                <View style={styles.textView}>
+                    {
+                        views2
+                    }
                 </View>
             </View>
         );
     }
+
+    _openList(title, type) {
+        this.state.navigator.push({
+            component: List,
+            title: title,
+            passProps: {
+                type: type
+            }
+        })
+    }
 }
+
 
 const styles = StyleSheet.create({
     container: {

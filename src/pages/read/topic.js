@@ -9,23 +9,33 @@ import {
 import Utils from '../../utils/utils'
 
 export default class topic extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: this.props.data
+        };
+    }
+
     render() {
+        let viewItems = [];
+        let data = this.state.data;
+        for (let i in data) {
+            viewItems.push(
+                <View style={styles.imageItem} key={i}>
+                    <Image style={styles.image}
+                           resetModel="cover"
+                           source={{uri: data[i].img}}/>
+                </View>
+            )
+        }
+
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
                     推荐专题
                 </Text>
                 <View style={styles.imageView}>
-                    <View style={styles.imageItem}>
-                        <Image style={styles.image}
-                               resetModel="cover"
-                               source={{uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'}}/>
-                    </View>
-                    <View style={styles.imageItem}>
-                        <Image style={styles.image}
-                               resetModel="cover"
-                               source={{uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504523242445&di=75edc150d2b48e5ba0c2ddb9a1237514&imgtype=0&src=http%3A%2F%2Fpic2.ooopic.com%2F12%2F52%2F87%2F60bOOOPICb4_1024.jpg'}}/>
-                    </View>
+                    {viewItems}
                 </View>
                 <View>
                     <Text style={styles.more}>

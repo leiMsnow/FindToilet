@@ -17,7 +17,11 @@ class ReadView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isShow: false
+            isShow: false,
+            recommendTopic: [],
+            hotTopic: [],
+            category: [],
+            other: [],
         };
     }
 
@@ -28,14 +32,14 @@ class ReadView extends Component {
                 <Divider/>
                 {
                     this.state.isShow ?
-                        <ScrollView>
-                            <Topic/>
-                            {/*<Divider/>*/}
-                            {/*<Recommend/>*/}
+                        <ScrollView style={styles.container}>
+                            <Topic data={this.state.recommendTopic}/>
                             <Divider/>
-                            <Category/>
+                            <Recommend name="热门推荐" data={this.state.hotTopic}/>
                             <Divider/>
-                            <Recommend/>
+                            <Category data={this.state.category} navigator={this.props.navigator}/>
+                            <Divider/>
+                            <Recommend name="清新一刻" data={this.state.other}/>
                         </ScrollView>
                         : null
                 }
@@ -43,11 +47,26 @@ class ReadView extends Component {
         );
     }
 
-    // todo fetch data
     componentDidMount() {
-        this.setState({
-            isShow: true
-        });
+        let self = this;
+        Utils.get('config', function (data) {
+            if (data.status === 1) {
+                let obj = data.data;
+                let recommendTopic = obj.recommendTopic;
+                let hotTopic = obj.hotTopic;
+                let category = obj.category;
+                let other = obj.other;
+                self.setState({
+                    isShow: true,
+                    recommendTopic: recommendTopic,
+                    hotTopic: hotTopic,
+                    category: category,
+                    other: other,
+                });
+            }
+        }, function (error) {
+            console.log(error);
+        })
     }
 }
 
@@ -67,7 +86,7 @@ export default class read extends Component {
             <NavigatorIOS
                 initialRoute={{
                     component: ReadView,
-                    title: '阅读',
+                    title: 'read',
                     navigationBarHidden: true,
                 }}
                 style={{flex: 1}}
@@ -79,6 +98,7 @@ export default class read extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginBottom: 30
     },
     divider: {
         borderColor: '#f0f0f0',
