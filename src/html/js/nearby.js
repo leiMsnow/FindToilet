@@ -11,15 +11,11 @@ let locationComplete = function (data) {
         searchNearBy([116.205467, 39.907761]);
     } else {
         alert("定位失败，暂时无法显示地图信息。");
-        // 定位失败，模拟位置测试
-        searchNearBy([116.205467, 39.907761]);
     }
 };
 
 let locationError = function () {
     alert("定位失败, 请确认已经开始定位服务。");
-    // 定位失败，模拟位置测试
-    searchNearBy([116.205467, 39.907761]);
 };
 
 let locationIcon = '<div class="locationIcon">' +

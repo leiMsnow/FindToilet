@@ -10,7 +10,6 @@ import List from './list';
 import Utils from '../../utils/utils';
 
 export default class Category extends Component {
-
     constructor(props) {
         super(props);
         this.state = {

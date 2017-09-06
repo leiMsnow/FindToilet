@@ -4,8 +4,11 @@ import {
     Text,
     View,
     Image,
+    TouchableOpacity,
 } from 'react-native';
 import Utils from '../../utils/utils';
+import Details from './details';
+
 
 export default class Recommend extends Component {
 
@@ -13,7 +16,8 @@ export default class Recommend extends Component {
         super(props);
         this.state = {
             name: this.props.name,
-            data: this.props.data
+            data: this.props.data,
+            navigator: this.props.navigator,
         };
     }
 
@@ -24,21 +28,23 @@ export default class Recommend extends Component {
         for (let i in data) {
             if (i < 4) {
                 view1.push(
-                    <View style={styles.imageItem} key={i}>
+                    <TouchableOpacity style={styles.imageItem} key={i}
+                                      onPress={this._openDetails.bind(this, data[i])}>
                         <Image style={styles.image}
                                resetModel="cover"
                                source={{uri: data[i].img}}/>
                         <Text style={styles.contentText} numberOfLines={2}>{data[i].title}</Text>
-                    </View>
+                    </TouchableOpacity>
                 );
             } else {
                 view2.push(
-                    <View style={styles.imageItem} key={i}>
+                    <TouchableOpacity style={styles.imageItem} key={i}
+                                      onPress={this._openDetails.bind(this, data[i])}>
                         <Image style={styles.image}
                                resetModel="cover"
                                source={{uri: data[i].img}}/>
                         <Text style={styles.contentText} numberOfLines={2}>{data[i].title}</Text>
-                    </View>
+                    </TouchableOpacity>
                 );
             }
         }
@@ -63,6 +69,16 @@ export default class Recommend extends Component {
 
             </View>
         );
+    }
+
+    _openDetails(data) {
+        this.state.navigator.push({
+            component: Details,
+            title: data.title,
+            passProps: {
+                url: data.url,
+            }
+        });
     }
 }
 

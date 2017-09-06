@@ -4,15 +4,18 @@ import {
     Text,
     View,
     Image,
+    TouchableOpacity
 } from 'react-native';
 
-import Utils from '../../utils/utils'
+import Utils from '../../utils/utils';
+import Details from './details';
 
 export default class topic extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data
+            data: this.props.data,
+            navigator: this.props.navigator
         };
     }
 
@@ -21,11 +24,12 @@ export default class topic extends Component {
         let data = this.state.data;
         for (let i in data) {
             viewItems.push(
-                <View style={styles.imageItem} key={i}>
+                <TouchableOpacity style={styles.imageItem} key={i}
+                                  onPress={this._openDetails.bind(this, data[i])}>
                     <Image style={styles.image}
                            resetModel="cover"
                            source={{uri: data[i].img}}/>
-                </View>
+                </TouchableOpacity>
             )
         }
 
@@ -44,6 +48,16 @@ export default class topic extends Component {
                 </View>
             </View>
         );
+    }
+
+    _openDetails(data) {
+        this.state.navigator.push({
+            component: Details,
+            title: data.title,
+            passProps: {
+                url: data.url,
+            }
+        });
     }
 }
 

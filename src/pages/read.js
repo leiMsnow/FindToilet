@@ -33,13 +33,13 @@ class ReadView extends Component {
                 {
                     this.state.isShow ?
                         <ScrollView style={styles.container}>
-                            <Topic data={this.state.recommendTopic}/>
+                            <Topic data={this.state.recommendTopic} navigator={this.props.navigator}/>
                             <Divider/>
-                            <Recommend name="热门推荐" data={this.state.hotTopic}/>
+                            <Recommend name="热门推荐" data={this.state.hotTopic} navigator={this.props.navigator}/>
                             <Divider/>
                             <Category data={this.state.category} navigator={this.props.navigator}/>
                             <Divider/>
-                            <Recommend name="清新一刻" data={this.state.other}/>
+                            <Recommend name="清新一刻" data={this.state.other} navigator={this.props.navigator}/>
                         </ScrollView>
                         : null
                 }
