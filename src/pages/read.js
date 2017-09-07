@@ -28,7 +28,7 @@ class ReadView extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Search/>
+                <Search navigator={this.props.navigator}/>
                 <Divider/>
                 {
                     this.state.isShow ?

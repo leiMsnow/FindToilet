@@ -24,27 +24,38 @@ export default class List extends Component {
     render() {
         let data = this.state.data;
         let viewItems = [];
-        for (let i in data) {
+        if (data) {
+            for (let i in data) {
+                viewItems.push(
+                    <TouchableOpacity style={styles.item} key={i}
+                                      onPress={this._openDetails.bind(this, data[i])}>
+                        <View>
+                            <Image
+                                style={styles.image}
+                                resetModel="cover"
+                                source={{uri: data[i].img}}/>
+                        </View>
+                        <View>
+                            <Text>
+                                {data[i].title}
+                            </Text>
+                            <Text>
+                                {data[i].time}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
+        } else {
             viewItems.push(
-                <TouchableOpacity style={styles.item} key={i}
-                                  onPress={this._openDetails.bind(this, data[i])}>
-                    <View>
-                        <Image
-                            style={styles.image}
-                            resetModel="cover"
-                            source={{uri: data[i].img}}/>
-                    </View>
-                    <View>
-                        <Text>
-                            {data[i].title}
-                        </Text>
-                        <Text>
-                            {data[i].time}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={styles.emptyItem} key={this.state.type}>
+                    <Text>
+                        没有找到{this.state.type}相关的信息
+                    </Text>
+                </View>
             );
         }
+
         return (
             <ScrollView style={styles.container}>
                 {viewItems}
@@ -97,4 +108,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowOffset: {width: (1 * Utils.pixel), height: Utils.pixel}
     },
+    emptyItem: {
+        height: Utils.size.height,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });

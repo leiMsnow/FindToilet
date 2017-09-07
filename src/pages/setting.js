@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#ededed',
         borderBottomWidth: Utils.pixel,
         justifyContent: 'center',
-    }, text: {
+    },
+    text: {
         height: 40,
         marginRight: 10,
         marginLeft: 10,
